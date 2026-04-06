@@ -1,0 +1,369 @@
+/* ===================================================================
+   ROLE SELECTION PAGE — PREMIUM MATURE DESIGN
+   =================================================================== */
+
+/* ── FULL-PAGE CONTAINER ── */
+.rs-page {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 100;
+}
+
+/* ── BACKGROUND: 1.jpg ── */
+.rs-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('/1.jpg') center center / cover no-repeat;
+}
+
+/* ── DARK OVERLAY ── */
+.rs-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(
+      ellipse 70% 70% at 50% 50%,
+      rgba(5, 10, 30, 0.88) 0%,
+      rgba(5, 10, 30, 0.72) 45%,
+      rgba(5, 10, 30, 0.45) 75%,
+      rgba(5, 10, 30, 0.25) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5) 0%,
+      transparent 25%,
+      transparent 75%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
+  pointer-events: none;
+}
+
+/* ── MINIMAL TOP BAR ── */
+.rs-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: 1rem 2rem;
+}
+
+.rs-topbar-logo {
+  font-family: var(--font-heading, 'Inter', sans-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ── CONTENT AREA ── */
+.rs-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 2rem;
+  animation: rsEnter 0.7s ease-out both;
+}
+
+@keyframes rsEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── HEADER TEXT ── */
+.rs-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.rs-title {
+  font-family: var(--font-heading, 'Inter', sans-serif);
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 1.5px;
+  color: #fff;
+  background: linear-gradient(180deg, #fff9e6 0%, #ffe58a 35%, #ffd54f 65%, #f0c030 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter:
+    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.95))
+    drop-shadow(0 0 20px rgba(0, 0, 0, 0.6));
+  text-shadow: none;
+  position: relative;
+}
+
+/* Subtle dark glow behind heading for readability */
+.rs-header::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 160%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.15) 50%,
+    transparent 75%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.rs-subtitle {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: rgba(220, 225, 240, 0.75);
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* ── CARDS GRID ── */
+.rs-cards {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.rs-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── CARD WRAPPER (image + card) ── */
+.rs-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── CHARACTER IMAGE ── */
+.rs-card-character {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  margin-bottom: -20px;
+  position: relative;
+  z-index: 5;
+  border-radius: 50%;
+  background: rgba(15, 20, 45, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  padding: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.rs-card-wrapper:hover .rs-card-character {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+}
+
+/* ── CARD ── */
+.rs-card {
+  position: relative;
+  width: 230px;
+  height: 200px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition:
+    transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.35s ease;
+  overflow: visible;
+}
+
+.rs-card-wrapper:hover .rs-card {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* ── CARD GLOW (behind card) ── */
+.rs-card-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  z-index: 0;
+  opacity: 0.3;
+  transition: opacity 0.35s ease;
+}
+
+.rs-card-wrapper:hover .rs-card-glow {
+  opacity: 0.65;
+}
+
+.rs-card-glow--blue {
+  background: linear-gradient(135deg, #4db8d9, #2196c4);
+  box-shadow: 0 0 20px rgba(0, 150, 200, 0.2);
+}
+
+.rs-card-glow--purple {
+  background: linear-gradient(135deg, #a76bc7, #8a52b0);
+  box-shadow: 0 0 20px rgba(140, 80, 180, 0.2);
+}
+
+/* ── CARD INNER (glass panel) ── */
+.rs-card-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.5rem 1.25rem;
+  background: rgba(12, 18, 40, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-sizing: border-box;
+}
+
+/* ── CARD BORDER ── */
+.rs-card-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  z-index: 3;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.rs-card--student .rs-card-border {
+  border-color: rgba(0, 150, 200, 0.15);
+}
+
+.rs-card--parent .rs-card-border {
+  border-color: rgba(140, 80, 180, 0.15);
+}
+
+.rs-card-wrapper:hover .rs-card-border {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ── CARD TITLE ── */
+.rs-card-title {
+  font-family: var(--font-heading, 'Inter', sans-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
+
+/* ── CARD DESCRIPTION ── */
+.rs-card-desc {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin: 0;
+  color: rgba(200, 210, 230, 0.7);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ── STUDENT CARD HOVER ACCENT ── */
+.rs-card--student .rs-card-wrapper:hover .rs-card-inner,
+.rs-card-wrapper:hover .rs-card--student .rs-card-inner {
+  box-shadow: 0 6px 30px rgba(0, 150, 200, 0.12);
+}
+
+.rs-card-wrapper:hover .rs-card-glow--blue {
+  box-shadow: 0 0 30px rgba(0, 150, 200, 0.3);
+}
+
+/* ── PARENT CARD HOVER ACCENT ── */
+.rs-card--parent .rs-card-wrapper:hover .rs-card-inner,
+.rs-card-wrapper:hover .rs-card--parent .rs-card-inner {
+  box-shadow: 0 6px 30px rgba(140, 80, 180, 0.12);
+}
+
+.rs-card-wrapper:hover .rs-card-glow--purple {
+  box-shadow: 0 0 30px rgba(140, 80, 180, 0.3);
+}
+
+/* ===================================================================
+   RESPONSIVE
+   =================================================================== */
+@media (max-width: 768px) {
+  .rs-content {
+    gap: 2rem;
+  }
+
+  .rs-title {
+    font-size: 2.2rem;
+  }
+
+  .rs-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .rs-cards {
+    gap: 2rem;
+  }
+
+  .rs-card {
+    width: 200px;
+    height: 180px;
+  }
+
+  .rs-card-character {
+    width: 85px;
+    height: 85px;
+  }
+
+  .rs-card-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .rs-title {
+    font-size: 1.8rem;
+  }
+
+  .rs-card {
+    width: 160px;
+    height: 160px;
+  }
+
+  .rs-card-character {
+    width: 70px;
+    height: 70px;
+  }
+
+  .rs-card-title {
+    font-size: 1.05rem;
+  }
+
+  .rs-card-desc {
+    font-size: 0.78rem;
+  }
+
+  .rs-cards {
+    gap: 1.5rem;
+  }
+}
