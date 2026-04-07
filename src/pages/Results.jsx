@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { saveQuizScore } from '../utils/trackingStore';
 import './Results.css';
 
 const Results = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { score = 0, total = 10, aiScore = 0, mode = 'quiz' } = location.state || {};
+  const { score = 0, total = 10, aiScore = 0, mode = 'quiz', subjectId = 'math' } = location.state || {};
   let { passed = false } = location.state || {};
 
   // If arena mode, pass condition is user beating AI
@@ -14,8 +15,15 @@ const Results = () => {
   }
   
   const [showRewards, setShowRewards] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
+    // Save the quiz score to tracking store (only once)
+    if (!saved) {
+      saveQuizScore(subjectId, score, total, mode);
+      setSaved(true);
+    }
+
     // Small delay before showing rewards for drama
     const timer = setTimeout(() => setShowRewards(true), 500);
     return () => clearTimeout(timer);

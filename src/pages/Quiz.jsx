@@ -56,7 +56,7 @@ const Quiz = () => {
       setIsAnswered(false);
     } else {
       const hasPassed = score >= 5;
-      navigate('/results', { state: { score, total: QUIZ_QUESTIONS.length, passed: hasPassed } });
+      navigate('/results', { state: { score, total: QUIZ_QUESTIONS.length, passed: hasPassed, subjectId: 'math' } });
     }
   };
 

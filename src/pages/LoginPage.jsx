@@ -44,8 +44,8 @@ const LoginPage = ({ isSignup = false }) => {
     
     const emailKey = username.toLowerCase();
 
-    // Special hardcoded Parent login (Teacher requirement)
-    if (emailKey === 'vaibhavtripathi@gmail.com' && password === '1234') {
+    // Special hardcoded Parent login
+    if (emailKey === 'vaibhavtripathi589@gmail.com' && password === '123') {
       navigate('/parents');
       return;
     }

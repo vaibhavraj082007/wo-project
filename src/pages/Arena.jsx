@@ -91,7 +91,7 @@ const Arena = () => {
       setPhase('waiting');
     } else {
       // End game
-      navigate('/results', { state: { score: userScore, total: totalQuestions, aiScore, mode: 'arena' } });
+      navigate('/results', { state: { score: userScore, total: totalQuestions, aiScore, mode: 'arena', subjectId } });
     }
   };
 

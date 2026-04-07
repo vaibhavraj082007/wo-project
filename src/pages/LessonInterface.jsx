@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { addStudyTime } from '../utils/trackingStore';
 import './LessonInterface.css';
 
 const lessonSteps = [
@@ -12,6 +13,19 @@ const lessonSteps = [
 const LessonInterface = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const navigate = useNavigate();
+  const pageEnterTime = useRef(Date.now());
+
+  // Track time spent on lessons (counts as "lesson" study time)
+  useEffect(() => {
+    pageEnterTime.current = Date.now();
+
+    return () => {
+      const seconds = Math.round((Date.now() - pageEnterTime.current) / 1000);
+      if (seconds > 2) {
+        addStudyTime('lesson', seconds, 'math');
+      }
+    };
+  }, []);
 
   const handleNext = () => {
     if (currentStep < lessonSteps.length - 1) {

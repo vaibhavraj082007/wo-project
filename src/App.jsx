@@ -59,11 +59,12 @@ const AppContent = () => {
   const isSplash = location.pathname === '/';
   const isDashboard = location.pathname === '/dashboard';
   const isRoleSelection = location.pathname === '/role-selection';
+  const isParentPage = location.pathname === '/parents';
 
   return (
     <div className="app-container">
-      {!isSplash && !isDashboard && !isRoleSelection && <Header />}
-      <main className={isSplash || isDashboard ? "" : "main-content"}>
+      {!isSplash && !isDashboard && !isRoleSelection && !isParentPage && <Header />}
+      <main className={isSplash || isDashboard || isParentPage ? "" : "main-content"}>
         <Routes>
           <Route path="/" element={<SplashScreen />} />
           <Route path="/home" element={<LandingPage />} />
