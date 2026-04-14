@@ -18,6 +18,7 @@ import ClassSelection from './pages/ClassSelection';
 import SubjectSelection from './pages/SubjectSelection';
 import SubjectOptions from './pages/SubjectOptions';
 import Notes from './pages/Notes';
+import ShortNotes from './pages/ShortNotes';
 import LearningMap from './pages/LearningMap';
 import LessonInterface from './pages/LessonInterface';
 import Quiz from './pages/Quiz';
@@ -82,6 +83,7 @@ const AppContent = () => {
           <Route path="/classes/:classId/options/:subjectId" element={<SubjectOptions />} />
           <Route path="/notes/:subjectId" element={<Notes />} />
           <Route path="/classes/:classId/notes/:subjectId" element={<Notes />} />
+          <Route path="/classes/:classId/short-notes/:subjectId" element={<ShortNotes />} />
           <Route path="/classes/:classId/arena-subjects" element={<ArenaSubjects />} />
           <Route path="/classes/:classId/map/:subjectId" element={<LearningMap />} />
           <Route path="/lesson" element={<LessonInterface />} />

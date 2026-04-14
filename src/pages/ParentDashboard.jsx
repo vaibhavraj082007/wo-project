@@ -129,6 +129,7 @@ const ParentDashboard = () => {
   const [totalStudyTime, setTotalStudyTime] = useState('0h 0m');
   const [subjectStudy, setSubjectStudy] = useState([]);
   const [arenaPerformance, setArenaPerformance] = useState(null);
+  const [studentProfile, setStudentProfile] = useState({ name: 'Vaibhav Tripathi', school: 'Delhi Public School', phone: '8591645328' });
 
   // Load data on login and periodically refresh
   useEffect(() => {
@@ -139,6 +140,12 @@ const ParentDashboard = () => {
       setTotalStudyTime(getTotalStudyTime());
       setSubjectStudy(getSubjectStudyDetails());
       setArenaPerformance(getArenaPerformance());
+      
+      const activeUser = localStorage.getItem('eduquest_active_user') || 'guest';
+      const profileRaw = localStorage.getItem(`eduquest_student_profile_${activeUser}`) || localStorage.getItem('eduquest_student_profile');
+      if (profileRaw) {
+        setStudentProfile(JSON.parse(profileRaw));
+      }
     };
 
     loadData();
@@ -215,9 +222,9 @@ const ParentDashboard = () => {
         <div className="pd-header-left">
           <div className="pd-student-avatar">👦</div>
           <div className="pd-student-info">
-            <h1>Vaibhav Tripathi</h1>
-            <p>Class 7 • Delhi Public School</p>
-            <p className="pd-phone">📱 8591645328</p>
+            <h1>{studentProfile.name}</h1>
+            <p>Class 7 • {studentProfile.school}</p>
+            <p className="pd-phone">📱 {studentProfile.phone}</p>
           </div>
         </div>
         <div className="pd-header-right">

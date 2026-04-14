@@ -23,18 +23,31 @@ const SUBJECT_ICONS = {
   hindi: '📝',
 };
 
-// ─── Read / Write helpers ───
-function getStore() {
+function getStoreKey(userId) {
+  if (userId) return `eduquest_tracking_${userId}`;
+  const activeUser = localStorage.getItem('eduquest_active_user') || 'guest';
+  return `eduquest_tracking_${activeUser}`;
+}
+
+function getStore(userId) {
   try {
-    const raw = localStorage.getItem(STORE_KEY);
+    const key = getStoreKey(userId);
+    let raw = localStorage.getItem(key);
+    
+    // Migration: If no user-specific data, but legacy generic data exists, migrate it
+    if (!raw && localStorage.getItem('eduquest_tracking')) {
+      raw = localStorage.getItem('eduquest_tracking');
+      localStorage.setItem(key, raw);
+    }
+    
     return raw ? JSON.parse(raw) : createEmptyStore();
   } catch {
     return createEmptyStore();
   }
 }
 
-function saveStore(store) {
-  localStorage.setItem(STORE_KEY, JSON.stringify(store));
+function saveStore(store, userId) {
+  localStorage.setItem(getStoreKey(userId), JSON.stringify(store));
 }
 
 function createEmptyStore() {
@@ -109,8 +122,8 @@ export function saveQuizScore(subjectId, score, total, mode) {
 // ─────────────────────────────────────────────
 
 /** Get study time breakdown for pie chart (in minutes) */
-export function getStudyBreakdown() {
-  const store = getStore();
+export function getStudyBreakdown(userId) {
+  const store = getStore(userId);
   const st = store.studyTime;
   return [
     { label: 'PDF Learning', minutes: Math.round(st.pdf / 60), color: '#6C5CE7' },
@@ -121,8 +134,8 @@ export function getStudyBreakdown() {
 }
 
 /** Get total study time as formatted string */
-export function getTotalStudyTime() {
-  const store = getStore();
+export function getTotalStudyTime(userId) {
+  const store = getStore(userId);
   const st = store.studyTime;
   const totalSec = st.pdf + st.notes + st.lesson + st.revision;
   const h = Math.floor(totalSec / 3600);
@@ -131,8 +144,8 @@ export function getTotalStudyTime() {
 }
 
 /** Get per-subject study details */
-export function getSubjectStudyDetails() {
-  const store = getStore();
+export function getSubjectStudyDetails(userId) {
+  const store = getStore(userId);
   const subjects = Object.keys(SUBJECT_NAMES);
 
   return subjects.map((id) => {
@@ -154,8 +167,8 @@ export function getSubjectStudyDetails() {
 }
 
 /** Get arena performance overview + per-subject data */
-export function getArenaPerformance() {
-  const store = getStore();
+export function getArenaPerformance(userId) {
+  const store = getStore(userId);
   const allScores = store.quizScores;
 
   // Overall stats

@@ -1,6 +1,23 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const [studentProfile, setStudentProfile] = useState({ name: 'Alex M.', school: 'Springfield High' });
+
+  useEffect(() => {
+    const activeUser = localStorage.getItem('eduquest_active_user') || 'guest';
+    const profileRaw = localStorage.getItem(`eduquest_student_profile_${activeUser}`) || localStorage.getItem('eduquest_student_profile');
+    if (profileRaw) {
+      setStudentProfile(JSON.parse(profileRaw));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    navigate('/login');
+  };
+
   return (
     <div className="profile-page animate-enter">
       <div className="profile-header">
@@ -9,7 +26,7 @@ const Profile = () => {
           <div className="level-badge">Lv. 12</div>
         </div>
         <div className="profile-info">
-          <h1>Alex M.</h1>
+          <h1>{studentProfile.name}</h1>
           <p className="profile-class">Class 5 • Growth Arena</p>
           <p className="profile-joined">Joined Sept 2023</p>
         </div>
@@ -105,7 +122,7 @@ const Profile = () => {
       </div>
       
       <div className="profile-actions">
-        <button className="game-button btn-orange logout-btn">LOG OUT</button>
+        <button className="game-button btn-orange logout-btn" onClick={handleLogout}>LOG OUT</button>
       </div>
     </div>
   );

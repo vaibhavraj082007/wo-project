@@ -143,8 +143,13 @@ const StudentOnboarding = () => {
 
     if (school && name) {
       // Save data locally
+      const activeUser = localStorage.getItem('eduquest_active_user') || 'guest';
       const profileData = { name, school, phone, phoneVerified: true };
+      localStorage.setItem(`eduquest_student_profile_${activeUser}`, JSON.stringify(profileData));
+      
+      // Also save to generic key for backward compatibility
       localStorage.setItem('eduquest_student_profile', JSON.stringify(profileData));
+      
       navigate('/classes');
     }
   };
